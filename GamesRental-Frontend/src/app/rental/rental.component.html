@@ -1,0 +1,149 @@
+<div class="panel-header panel-header-sm"></div>
+
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-9" *ngIf="showForm">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title"> Rental's Form</h5>
+        </div>
+        <div class="card-body">
+          <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+            <div class="row">
+              <input type="hidden" class="form-control" placeholder="id" name="id" [(ngModel)]="rental.id">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Customer</label>
+                  <select class="form-control" name="customer" [(ngModel)]="rental.customerId">
+                    <option style="font-size: 0.8rem;" [value]="null">Select a customer</option>
+                    <option style="font-size: 0.8rem;" *ngFor="let customer of customers" [value]="customer.id">
+                      {{customer.document}} | {{customer.fullName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Game</label>
+                  <select class="form-control" name="game" [(ngModel)]="rental.gameId">
+                    <option style="font-size: 0.8rem;" [value]="null">Select a game</option>
+                    <option style="font-size: 0.8rem;" *ngFor="let game of games" [value]="game.id">
+                      {{game.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Initial Date</label>
+                  <input type="datetime-local" class="form-control" placeholder="Initial Date" name="initialDate"
+                  [(ngModel)]="rental.initialDate" (change)="calculatePrice()">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Final Date</label>
+                  <input type="datetime-local" class="form-control" placeholder="Final Date" name="finalDate"
+                  [(ngModel)]="rental.finalDate" (change)="calculatePrice()">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Total Price</label>
+                  <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fa fa-dollar-sign"></i></span>
+                    </div>
+                    <input type="number" class="form-control" placeholder="Total Price" name="totalPrice"
+                      [(ngModel)]="rental.totalPrice" (click)="calculatePrice()">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Status</label>
+                  <input type="hidden" class="form-control" placeholder="Status" name="status"
+                    [(ngModel)]="rental.status">
+                  <div class="btn-group" role="group" aria-label="Basic example"
+                    style="margin-top: -10px; cursor: pointer;" (click)="rental.status=!rental.status">
+                    <button type="button" class="btn btn-primary btn-round" [disabled]="rental.status == true">Rented</button>
+                    <button type="button" class="btn btn-success btn-round" [disabled]="rental.status == false">Delivered</button>
+                  </div>
+                  <!-- <input class="form-control form-control-sm " type="radio" disabled checked> -->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+              </div>
+              <div class="col-md-2 col-xs-2"><br>
+                <button type="submit" class="btn btn-primary btn-block btn-round btn-sm">Save</button>
+              </div>
+              <div class="col-md-2 col-xs-2"><br>
+                <button type="button" class="btn btn-default btn-block btn-round btn-sm"
+                  (click)="showForm = false; rental = null">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" *ngIf="showForm">
+      <div class="card text-center">
+        <div class="card-body">
+          <div class="author">
+            <h5 class="title text-primary">{{rental.customer.fullName}}</h5>
+            <hr>
+            <h5 class="title text-primary">{{rental.game.name}}</h5>
+            <hr>
+            <p class="description">
+              <b>Rental start:</b> {{initialDate}}
+            </p>
+            <p class="description">
+              <b>Rental end:</b> {{finalDate}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <button type="button" class="btn btn-primary btn-sm pull-right" (click)="formNewRental();">
+            Add <i class="fa fa-plus"></i>
+          </button>
+          <h5 class="title">Rentals' list</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>Id</th>
+                <th>Customer's name</th>
+                <th>Game's name</th>
+                <th>Rental end</th>
+                <th>Total Price</th>
+                <th class="text-right">Actions</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rental of rentals">
+                  <td>{{rental.id}}</td>
+                  <td>{{rental.customer.fullName}}</td>
+                  <td>{{rental.game.name}}</td>
+                  <td>{{rental.finalDate}}</td>
+                  <td>{{rental.totalPrice}}</td>
+                  <td class="text-right">
+                    <button class="btn btn-neutral" (click)="selectRental(rental)">
+                      <i class="fas fa-external-link-alt fa-2x"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

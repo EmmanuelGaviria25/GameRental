@@ -1,0 +1,17 @@
+
+<div class="logo" align="center">
+    <img src="./assets/img/5f60f3de47faae4985ca476008aefd80.png" style="border-radius: 50%; width: 30%;">
+    <a href="" class="simple-text logo-normal">
+        <b>Game Rental</b>
+    </a>
+</div>
+<div class="sidebar-wrapper">
+    <ul class="nav">
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+            <a [routerLink]="[menuItem.path]">
+                <i class="now-ui-icons {{menuItem.icon}}"></i>
+                <p>{{menuItem.title}}</p>
+            </a>
+        </li>
+    </ul>
+</div>

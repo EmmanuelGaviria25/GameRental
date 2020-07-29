@@ -1,0 +1,103 @@
+<div class="panel-header panel-header-sm"></div>
+
+<div class="main-content">
+    
+  <div class="row">
+    <div class="col-md-9" *ngIf="showForm" >
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title"> Game's Form</h5>
+        </div>
+        <div class="card-body">
+          <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+            <div class="row">
+              <input type="hidden" class="form-control" placeholder="id" name="id"  [(ngModel)]="game.id">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control" placeholder="Name" name="name" [(ngModel)]="game.name">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Available Stock</label>
+                  <input type="number" class="form-control" placeholder="Available Stock" name="availableStock"  [(ngModel)]="game.availableStock">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Price per Hour</label>
+                  <input type="number" class="form-control" placeholder="Price per Hour" name="pricePerHour"  [(ngModel)]="game.pricePerHour">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+              </div>
+              <div class="col-md-2 col-xs-2"><br>
+                <button type="submit" class="btn btn-primary btn-block btn-round btn-sm">Save</button>
+              </div>
+              <div class="col-md-2 col-xs-2"><br>
+                <button type="button" class="btn btn-default btn-block btn-round btn-sm" (click)="showForm = false; game = null">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" *ngIf="showForm">
+      <div class="card text-center">
+        <div class="card-body">
+          <div class="author">
+            <h5 class="title text-primary">{{game.name}}</h5>
+            <hr>
+            <p class="description">
+              <b>Available Stock:</b> {{game.availableStock}}
+            </p>
+            <p class="description">
+              <b>Price per Hour:</b> {{game.pricePerHour}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <button type="button" class="btn btn-primary btn-sm pull-right" (click)="formNewGame();">
+            Add <i class="fa fa-plus"></i>
+          </button>
+          <h5 class="title">Games' list</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Available Stock</th>
+                <th>Price per Hour</th>
+                <th class="text-right">Actions</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let game of games">
+                  <td>{{game.id}}</td>
+                  <td>{{game.name}}</td>
+                  <td>{{game.availableStock}}</td>
+                  <td>{{game.pricePerHour}}</td>
+                  <td class="text-right">
+                    <button class="btn btn-neutral" (click)="selectGame(game)">
+                      <i class="fas fa-external-link-alt fa-2x"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

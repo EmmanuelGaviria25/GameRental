@@ -1,0 +1,112 @@
+<div class="panel-header panel-header-sm"></div>
+
+<div class="main-content">
+    
+  <div class="row">
+    <div class="col-md-9" *ngIf="showForm" >
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title"> Customer's Form</h5>
+        </div>
+        <div class="card-body">
+          <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+            <div class="row">
+              <input type="hidden" class="form-control" placeholder="id" name="id"  [(ngModel)]="customer.id">
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Document</label>
+                  <input type="text" class="form-control" placeholder="Document" name="document"  [(ngModel)]="customer.document">
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" class="form-control" placeholder="Full Name" name="fullName" [(ngModel)]="customer.fullName">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input type="text" class="form-control" placeholder="Phone" name="phone"  [(ngModel)]="customer.phone">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label>Address</label>
+                  <input type="text" class="form-control" placeholder="Address" name="address" [(ngModel)]="customer.address">
+                </div>
+              </div>
+              <div class="col-md-2 col-xs-2"><br>
+                <button type="submit" class="btn btn-primary btn-block btn-round btn-sm">Save</button>
+              </div>
+              <div class="col-md-2 col-xs-2"><br>
+                <button type="button" class="btn btn-default btn-block btn-round btn-sm" (click)="showForm = false; customer = null">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3" *ngIf="showForm">
+      <div class="card" align="center">
+        <div class="card-body">
+          <div class="author">
+            <h5 class="title text-primary">{{customer.fullName}}</h5>
+            <hr>
+            <p class="description">
+              <b>Document:</b> {{customer.document}}
+            </p>
+            <p class="description">
+              <b>Contact:</b> {{customer.phone}}
+            </p>
+          </div>
+          <p class="description text-center">
+            <b>Address:</b> {{customer.address}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <button type="button" class="btn btn-primary btn-sm pull-right" (click)="formNewCustomer();">
+            Add <i class="fa fa-plus"></i>
+          </button>
+          <h5 class="title">Customers' list</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>Document</th>
+                <th>Full Name</th>
+                <th>Phone</th>
+                <th class="text-right">Address</th>
+                <th class="text-right">Actions</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let customer of customers">
+                  <td>{{customer.document}}</td>
+                  <td>{{customer.fullName}}</td>
+                  <td>{{customer.phone}}</td>
+                  <td class="text-right">
+                    {{customer.address}}
+                  </td>
+                  <td class="text-right">
+                    <button class="btn btn-neutral" (click)="selectCustomer(customer)">
+                      <i class="fas fa-external-link-alt fa-2x"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
