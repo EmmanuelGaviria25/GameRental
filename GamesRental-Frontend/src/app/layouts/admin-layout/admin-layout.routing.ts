@@ -5,7 +5,7 @@ import { RentalComponent } from '../../rental/rental.component';
 import { CustomerComponent } from '../../customer/customer.component';
 
 export const AdminLayoutRoutes: Routes = [
+    { path: 'rental',   component: RentalComponent },
     { path: 'game',      component: GameComponent },
-    { path: 'customer',   component: CustomerComponent },
-    { path: 'rental',   component: RentalComponent }
+    { path: 'customer',   component: CustomerComponent }
 ];
