@@ -67,8 +67,8 @@
                     [(ngModel)]="rental.status">
                   <div class="btn-group" role="group" aria-label="Basic example"
                     style="margin-top: -10px; cursor: pointer;" (click)="rental.status=!rental.status">
-                    <button type="button" class="btn btn-primary btn-round" [disabled]="rental.status == true">Rented</button>
-                    <button type="button" class="btn btn-success btn-round" [disabled]="rental.status == false">Delivered</button>
+                    <button type="button" class="btn btn-danger btn-round" [disabled]="rental.status != true">Rented</button>
+                    <button type="button" class="btn btn-success btn-round" [disabled]="rental.status == true">Delivered</button>
                   </div>
                   <!-- <input class="form-control form-control-sm " type="radio" disabled checked> -->
                 </div>
@@ -125,6 +125,7 @@
                 <th>Game's name</th>
                 <th>Rental end</th>
                 <th>Total Price</th>
+                <th>Status</th>
                 <th class="text-right">Actions</th>
               </thead>
               <tbody>
@@ -132,8 +133,10 @@
                   <td>{{rental.id}}</td>
                   <td>{{rental.customer.fullName}}</td>
                   <td>{{rental.game.name}}</td>
-                  <td>{{rental.finalDate}}</td>
+                  <td>{{rental.finalDate+(1000*60*60*5) | date:'EEEE, MMMM d, y, h:mm:ss a'}}</td>
                   <td>{{rental.totalPrice}}</td>
+                  <td *ngIf="rental.status"><span class="badge badge-pill badge-danger">Rented</span></td>
+                  <td *ngIf="!rental.status"><span class="badge badge-pill badge-success">Delivered</span></td>
                   <td class="text-right">
                     <button class="btn btn-neutral" (click)="selectRental(rental)">
                       <i class="fas fa-external-link-alt fa-2x"></i>
